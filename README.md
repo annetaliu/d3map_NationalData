@@ -4,7 +4,7 @@ Fetch few years' data from china national data website, draw a map with d3js, dy
 # release 1.0:
 
 seprated into 2 steps
-###1.get data from national
+###1.get data from national data website
   - get_reg_10_year_data_pools.ipynb  -- fetch data from china national data website, save into reg_10year.csv.
   - take "Total Investment in Residential Buildings in the Whole Country" as example.
 
@@ -13,5 +13,6 @@ seprated into 2 steps
   - cd d3map
   - data from reg_10year.csv, 
   - final result is  Investment10.html.
+  - 
   - unsolved issue: 10 years data is not rolling in turn shown on map. only 1 year could be displayed.
 
