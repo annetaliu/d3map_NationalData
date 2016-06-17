@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <style>
+        .provinces {
+          background-color: #fff;
+          border: 1px solid #ccc;
+        }
+        .hk {
+            position:relative;
+            left:-750px;
+            top:0px;
+        }
+        
+        /*
+        .background {
+          fill: none;
+          pointer-events: all;
+        }
+
+        .province {
+          fill: #cde;
+          stroke: #fff;
+            stroke-linejoin: round;
+          stroke-linecap: round;
+        }
+        */
+        
+        /*#provinces .active, #states .active {
+          fill: #89a;
+        }
+        #cities {
+          stroke-width: 0;
+        }
+        .city {
+          fill: #345;
+          stroke: #fff;
+        }
+        pre.prettyprint {
+          border: 1px solid #ccc;
+          margin-bottom: 0;
+          padding: 10px;
+        }*/
+    </style>
+  </head>
+  <body>    
+    <p id="test1"> this is a test tielte</p>
+    <div id="map"></div>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://d3js.org/queue.v1.min.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+    <script>
+    
+        // data goes here   
+        var dataList=[[['Beijing', '2102.6465'], ['Tianjin', '1292.8878'], ['Hebei', '3648.8022'], ['Shanxi', '2004.5373'], ['Inner Mongolia', '1250.5041'], ['Liaoning', '4077.1956'], ['Jilin', '841.4182'], ['Heilongjiang', '1118.6717'], ['Shanghai', '1730.8079'], ['Jiangsu', '6632.9509'], ['Zhejiang', '5782.4379'], ['Anhui', '3636.2898'], ['Fujian', '3277.3692'], ['Jiangxi', '1704.9514'], ['Shandong', '5396.5306'], ['Henan', '4309.7883'], ['Hubei', '3371.8885'], ['Hunan', '2726.5515'], ['Guangdong', '5907.4727'], ['Guangxi', '1786.1116'], ['Hainan', '1242.964'], ['Chongqing', '2717.6801'], ['Sichuan', '4087.5569'], ['Guizhou', '1605.5005'], ['Yunnan', '2524.9302'], ['Tibet', '61.5559'], ['Shaanxi', '2777.0196'], ['Gansu', '770.0593'], ['Qinghai', '331.0324'], ['Ningxia', '526.7259'], ['Xinjiang', '1368.8748']], [['Beijing', '2026.7532'], ['Tianjin', '1262.4704'], ['Hebei', '3231.344'], ['Shanxi', '1688.956'], ['Inner Mongolia', '1289.7793'], ['Liaoning', '4875.2237'], ['Jilin', '1053.5255'], ['Heilongjiang', '1419.8476'], ['Shanghai', '1626.9469'], ['Jiangsu', '5990.3299'], ['Zhejiang', '5039.9379'], ['Anhui', '3284.3892'], ['Fujian', '2814.2493'], ['Jiangxi', '1471.0634'], ['Shandong', '5242.328'], ['Henan', '3975.678'], ['Hubei', '2833.1161'], ['Hunan', '2486.3197'], ['Guangdong', '5210.5934'], ['Guangxi', '1617.1929'], ['Hainan', '1082.855'], ['Chongqing', '2374.3619'], ['Sichuan', '3551.5943'], ['Guizhou', '1549.2215'], ['Yunnan', '2244.3976'], ['Tibet', '28.1026'], ['Shaanxi', '2627.6684'], ['Gansu', '858.1355'], ['Qinghai', '295.7297'], ['Ningxia', '461.4424'], ['Xinjiang', '1354.5412']], [['Beijing', '1872.9647'], ['Tianjin', '1082.4134'], ['Hebei', '3073.5817'], ['Shanxi', '1467.0489'], ['Inner Mongolia', '1148.623'], ['Liaoning', '4201.1179'], ['Jilin', '1109.718'], ['Heilongjiang', '1480.705'], ['Shanghai', '1457.6399'], ['Jiangsu', '5051.226'], ['Zhejiang', '4318.4956'], ['Anhui', '2738.0055'], ['Fujian', '2135.3841'], ['Jiangxi', '1232.9522'], ['Shandong', '4815.2704'], ['Henan', '3332.2972'], ['Hubei', '2213.2947'], ['Hunan', '2194.1785'], ['Guangdong', '4344.4852'], ['Guangxi', '1503.773'], ['Hainan', '860.0469'], ['Chongqing', '1946.85'], ['Sichuan', '3046.3103'], ['Guizhou', '1164.9408'], ['Yunnan', '1606.6507'], ['Tibet', '39.0415'], ['Shaanxi', '2362.3404'], ['Gansu', '751.3316'], ['Qinghai', '316.3069'], ['Ningxia', '360.759'], ['Xinjiang', '1130.9164']], [['Beijing', '1942.6368'], ['Tianjin', '910.7189'], ['Hebei', '3141.4993'], ['Shanxi', '1187.7169'], ['Inner Mongolia', '1312.8229'], ['Liaoning', '3691.5986'], ['Jilin', '1059.3185'], ['Heilongjiang', '1378.1588'], ['Shanghai', '1469.2274'], ['Jiangsu', '4687.5843'], ['Zhejiang', '3510.5809'], ['Anhui', '2478.5707'], ['Fujian', '1924.751'], ['Jiangxi', '1030.8997'], ['Shandong', '4480.9941'], ['Henan', '3033.4106'], ['Hubei', '1816.8072'], ['Hunan', '1978.2288'], ['Guangdong', '4021.0906'], ['Guangxi', '1455.8752'], ['Hainan', '687.9573'], ['Chongqing', '1676.8553'], ['Sichuan', '2846.2802'], ['Guizhou', '803.4668'], ['Yunnan', '1199.9584'], ['Tibet', '28.1246'], ['Shaanxi', '1902.8781'], ['Gansu', '622.9436'], ['Qinghai', '306.3711'], ['Ningxia', '305.2217'], ['Xinjiang', '886.9194']], [['Beijing', '1662.2'], ['Tianjin', '700.5'], ['Hebei', '2614.8'], ['Shanxi', '900.3'], ['Inner Mongolia', '961.8'], ['Liaoning', '2724.1'], ['Jilin', '872'], ['Heilongjiang', '1066.2'], ['Shanghai', '1233'], ['Jiangsu', '3665.2'], ['Zhejiang', '2785.5'], ['Anhui', '2248.7'], ['Fujian', '1254.1'], ['Jiangxi', '876.7'], ['Shandong', '3706.9'], ['Henan', '2721.5'], ['Hubei', '1400.1'], ['Hunan', '1505.9'], ['Guangdong', '3161.7'], ['Guangxi', '1218.6'], ['Hainan', '495.3'], ['Chongqing', '1325.9'], ['Sichuan', '2354.1'], ['Guizhou', '530.4'], ['Yunnan', '920.5'], ['Tibet', '42.1'], ['Shaanxi', '1486.6'], ['Gansu', '486.5'], ['Qinghai', '177.9'], ['Ningxia', '238.8'], ['Xinjiang', '561.3']], [['Beijing', '1034.6785'], ['Tianjin', '576.851'], ['Hebei', '1800.5682'], ['Shanxi', '760.082'], ['Inner Mongolia', '732.0396'], ['Liaoning', '2128.3895'], ['Jilin', '786.7925'], ['Heilongjiang', '810.2464'], ['Shanghai', '922.8077'], ['Jiangsu', '2856.2859'], ['Zhejiang', '2154.2538'], ['Anhui', '1746.7245'], ['Fujian', '1008.4843'], ['Jiangxi', '789.7548'], ['Shandong', '2915.202'], ['Henan', '2300.381'], ['Hubei', '1159.4852'], ['Hunan', '1163.4156'], ['Guangdong', '2631.0244'], ['Guangxi', '914.6794'], ['Hainan', '329.7403'], ['Chongqing', '986.0387'], ['Sichuan', '2373.6832'], ['Guizhou', '423.8563'], ['Yunnan', '819.8839'], ['Tibet', '52.454'], ['Shaanxi', '1208.2665'], ['Gansu', '402.6584'], ['Qinghai', '100.2678'], ['Ningxia', '162.2594'], ['Xinjiang', '376.8043']], [['Beijing', '1028.2178'], ['Tianjin', '510.1959'], ['Hebei', '1359.6826'], ['Shanxi', '564.2597'], ['Inner Mongolia', '744.4724'], ['Liaoning', '1765.1775'], ['Jilin', '633.3653'], ['Heilongjiang', '565.4112'], ['Shanghai', '903.3463'], ['Jiangsu', '2756.2381'], ['Zhejiang', '1883.6288'], ['Anhui', '1429.8768'], ['Fujian', '903.5276'], ['Jiangxi', '670.1626'], ['Shandong', '2540.8699'], ['Henan', '1924.9583'], ['Hubei', '932.0206'], ['Hunan', '957.4766'], ['Guangdong', '2630.5049'], ['Guangxi', '666.3328'], ['Hainan', '207.2485'], ['Chongqing', '753.8458'], ['Sichuan', '1492.4926'], ['Guizhou', '311.667'], ['Yunnan', '637.9789'], ['Tibet', '63.6277'], ['Shaanxi', '1035.8174'], ['Gansu', '435.0512'], ['Qinghai', '65.3222'], ['Ningxia', '127.3016'], ['Xinjiang', '349.5687']], [['Beijing', '1091.3903'], ['Tianjin', '373.5963'], ['Hebei', '998.9836'], ['Shanxi', '461.9967'], ['Inner Mongolia', '523.8489'], ['Liaoning', '1380.5296'], ['Jilin', '521.7448'], ['Heilongjiang', '468.1402'], ['Shanghai', '853.1341'], ['Jiangsu', '2168.2388'], ['Zhejiang', '1685.0722'], ['Anhui', '988.9958'], ['Fujian', '861.9672'], ['Jiangxi', '535.1476'], ['Shandong', '1978.4271'], ['Henan', '1445.2895'], ['Hubei', '717.1605'], ['Hunan', '800.0777'], ['Guangdong', '2246.6228'], ['Guangxi', '556.2505'], ['Hainan', '130.1993'], ['Chongqing', '655.6788'], ['Sichuan', '1306.8059'], ['Guizhou', '245.4852'], ['Yunnan', '519.9418'], ['Tibet', '66.4863'], ['Shaanxi', '788.6337'], ['Gansu', '179.836'], ['Qinghai', '50.3319'], ['Ningxia', '90.7829'], ['Xinjiang', '285.1187']], [['Beijing', '951.3017'], ['Tianjin', '334.0949'], ['Hebei', '781.1656'], ['Shanxi', '350.3467'], ['Inner Mongolia', '374.1324'], ['Liaoning', '1041.8612'], ['Jilin', '349.1962'], ['Heilongjiang', '379.8219'], ['Shanghai', '854.1516'], ['Jiangsu', '1697.624'], ['Zhejiang', '1458.6295'], ['Anhui', '748.0653'], ['Fujian', '611.559'], ['Jiangxi', '402.7199'], ['Shandong', '1557.5422'], ['Henan', '1019.4036'], ['Hubei', '564.4851'], ['Hunan', '579.4791'], ['Guangdong', '1649.7908'], ['Guangxi', '397.8786'], ['Hainan', '84.7662'], ['Chongqing', '503.3054'], ['Sichuan', '992.6909'], ['Guizhou', '177.3595'], ['Yunnan', '394.9211'], ['Tibet', '52.061'], ['Shaanxi', '531.0098'], ['Gansu', '140.4182'], ['Qinghai', '40.583'], ['Ningxia', '78.1469'], ['Xinjiang', '234.4037']], [['Beijing', '877.8951'], ['Tianjin', '272.9521'], ['Hebei', '607.581'], ['Shanxi', '211.6535'], ['Inner Mongolia', '198.2475'], ['Liaoning', '753.5723'], ['Jilin', '211.271'], ['Heilongjiang', '262.4471'], ['Shanghai', '940.8054'], ['Jiangsu', '1386.5328'], ['Zhejiang', '1377.2509'], ['Anhui', '554.5796'], ['Fujian', '437.9168'], ['Jiangxi', '297.0842'], ['Shandong', '1276.1235'], ['Henan', '713.6222'], ['Hubei', '441.5831'], ['Hunan', '504.7532'], ['Guangdong', '1283.5259'], ['Guangxi', '341.6021'], ['Hainan', '78.6496'], ['Chongqing', '408.5426'], ['Sichuan', '697.6281'], ['Guizhou', '142.3958'], ['Yunnan', '322.5582'], ['Tibet', '19.4904'], ['Shaanxi', '369.5851'], ['Gansu', '140.0094'], ['Qinghai', '27.8488'], ['Ningxia', '63.6306'], ['Xinjiang', '166.2802']]];var title='Total Investment in Residential Buildings in the Whole Country';var desc='Total Investment in Residential Buildings in the Whole Country';var credits='From National Data';var units='Billion RMB';
+    function dynamicLoad(){
+        var today=new Date();
+        var s=today.getSeconds();
+        var sindex=s%10;
+        t=setTimeout('dynamicLoad()',1000);
+        document.getElementById('test1').innerHTML=sindex+2005  ;            
+        //document.write(test1)
+        var yeardata=dataList[sindex];
+        return yeardata;
+    }
+        // MAP setup
+        var width = 900,
+            height = 550;
+
+        var data=dynamicLoad(dataList);
+        
+    </script>
+    <script src="d3map.js"></script>
+
+  </body>
+</html>

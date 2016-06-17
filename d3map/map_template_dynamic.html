@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <style>
+        .provinces {
+          background-color: #fff;
+          border: 1px solid #ccc;
+        }
+        .hk {
+            position:relative;
+            left:-750px;
+            top:0px;
+        }
+        
+        /*
+        .background {
+          fill: none;
+          pointer-events: all;
+        }
+
+        .province {
+          fill: #cde;
+          stroke: #fff;
+            stroke-linejoin: round;
+          stroke-linecap: round;
+        }
+        */
+        
+        /*#provinces .active, #states .active {
+          fill: #89a;
+        }
+        #cities {
+          stroke-width: 0;
+        }
+        .city {
+          fill: #345;
+          stroke: #fff;
+        }
+        pre.prettyprint {
+          border: 1px solid #ccc;
+          margin-bottom: 0;
+          padding: 10px;
+        }*/
+    </style>
+  </head>
+  <body>    
+    <p id="test1"> this is a test tielte</p>
+    <div id="map"></div>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://d3js.org/queue.v1.min.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+    <script>
+    
+        // data goes here   
+        TO_BE_CHANGED
+    function dynamicLoad(){
+        var today=new Date();
+        var s=today.getSeconds();
+        var sindex=s%10;
+        t=setTimeout('dynamicLoad()',1000);
+        document.getElementById('test1').innerHTML=sindex+2005  ;            
+        //document.write(test1)
+        var yeardata=dataList[sindex];
+        return yeardata;
+    }
+        // MAP setup
+        var width = 900,
+            height = 550;
+
+        var data=dynamicLoad(dataList);
+        
+    </script>
+    <script src="d3map.js"></script>
+
+  </body>
+</html>
