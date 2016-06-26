@@ -13,6 +13,5 @@ seprated into 2 steps
   - cd d3map
   - data from reg_10year.csv, 
   - final result is  Investment10.html.
-   
-  * unsolved issue: 10 years data is not rolling in turn shown on map. only 1 year could be displayed.
+    * unsolved issue: 10 years data is not rolling in turn shown on map. only 1 year could be displayed.
 
